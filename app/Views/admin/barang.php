@@ -1,12 +1,11 @@
 <?php $this->extend('layout/template') ?>
 
 <?php $this->section('konten') ?>
-<!-- Content Header (Page header) -->
 <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Data Pengguna</h1>
+            <h1 class="m-0 text-dark">Data Barang</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -19,6 +18,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">                        
+                        <!-- /.card-header -->
                         <div class="row mt-4 mr-4">
                             <div class="col-md-4 ml-4">
                                 <!-- SEARCH FORM -->
@@ -39,25 +39,24 @@
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>Nomor Telepon</th>
-                                <th>level</th>
-                                <th>Aktivasi?</th>
+                                <th>Nama Penjual</th>
+                                <th>Nama Barang</th>
+                                <th>Banyak Barang</th>
+                                <th>Harga</th>
+                                <th>Opsi</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                $currentPage -= 1;
-                                $i = 1 + (6 * $currentPage);
-                                foreach ($pengguna as $user) : ?>
+                                $i = 1;
+                                foreach ($barang as $item) : ?>
                                     <tr>
                                         <td><?= $i++ ?></td>
-                                        <td><?= $user['nama_pengguna'] ?></td>
-                                        <td><?= $user['email'] ?></td>
-                                        <td><?= $user['nomor_telepon'] ?></td>
-                                        <td><?= $user['level'] ?></td>
-                                        <td><?= $user['is_active'] == 1 ? '<span class="badge bg-success">Sudah Aktivasi</span>' : '<span class="badge bg-danger">Belum Aktivasi</span>' ?></td>                            
+                                        <td><?= $item['nama_penjual'] ?></td>
+                                        <td><?= $item['nama_barang'] ?></td>
+                                        <td><?= $item['banyak_barang'] ?></td>
+                                        <td><?= $item['harga_barang'] ?></td>
+                                        <td></td>                            
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>                  
@@ -65,7 +64,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
-                            <?= $pager->links('pengguna', 'my_pager') ?>                            
+                            <?= $pager->links('barang', 'my_pager') ?>
                         </div>
                     </div>
                     <!-- /.card -->

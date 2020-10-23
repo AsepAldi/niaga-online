@@ -37,7 +37,8 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">          
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">  
+          <?php if(session()->get('level') == 'admin') : ?>
             <li class="nav-header">Data</li>
             <li class="nav-item">
                 <a href="<?= base_url('/admin/pengguna') ?>" class="nav-link">
@@ -63,6 +64,25 @@
                 </p>
                 </a>
             </li>
+          <?php else : ?>
+          <li class="nav-header">Menu</li>
+          <li class="nav-item">
+              <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-shopping-basket"></i>
+              <p>
+                Beli Barang                  
+              </p>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>
+                Jual Barang                  
+              </p>
+              </a>
+          </li>
+          <?php endif; ?>
         </ul>
         <hr>
         <ul class="nav nav-pills nav-sidebar flex-column">

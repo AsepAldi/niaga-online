@@ -25,4 +25,9 @@ class Pengguna_model extends Model
         $this->db->table('t_pengguna')->set('is_active', 1)->where('email', $email)->update();
         return true;
     }
+
+    public function search($keyword)
+    {
+        return $this->table('t_pengguna')->like('nama_pengguna', $keyword)->orLike('email', $keyword)->orLike('nomor_telepon', $keyword)->orLike('level', $keyword);
+    }
 }
