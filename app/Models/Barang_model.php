@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 class Barang_model extends Model
 {
     protected $table = 't_barang';
-    protected $allowedFields = ['id_barang', 'id_penjual', 'nama_barang', 'foto_barang', 'harga_barang', 'banyak_barang', 'deskripsi_barang'];
+    protected $allowedFields = ['id_penjual', 'nama_barang', 'foto_barang', 'harga_barang', 'banyak_barang', 'deskripsi_barang'];
 
     public function getBarang($keyword = null)
     {

@@ -31,12 +31,15 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', $session->get('level') == null ? 'Auth::index' : ($session->get('level') == 'admin' ? 'Admin::index' : 'pengguna') );
-$routes->get('/auth', $session->get('level') == null ? 'Auth::index' : ($session->get('level') == 'admin' ? 'Admin::index' : 'pengguna') );
-$routes->get('/admin', $session->get('level') == 'admin' ? 'Admin::index' : 'Auth::block');
-$routes->get('/pengguna', $session->get('level') == 'pengguna' ? 'Pengguna::index' : 'Auth::block');
-$routes->get('/admin/(:hash)', $session->get('level') == 'admin' ? 'Admin::$1' : 'Auth::block');
-$routes->get('/pengguna/(:hash)', $session->get('level') == 'pengguna' ? 'Pengguna::$1' : 'Auth::block');
+$routes->get('/', 'Pembeli::index');
+// $routes->get('/', $session->get('level') == null ? 'Auth::index' : ($session->get('level') == 'admin' ? 'Admin::index' : 'pengguna') );
+$routes->get('/admin_pengguna', $session->get('level') == 'admin_pengguna' ? 'Admin_pengguna::index' : 'Auth::block');
+$routes->get('/admin_laporan', $session->get('level') == 'admin_laporan' ? 'Admin_laporan::index' : 'Auth::block');
+$routes->get('/admin_pengguna/(:hash)', $session->get('level') == 'admin_pengguna' ? 'Admin_pengguna::$1' : 'Auth::block');
+$routes->get('/admin_laporan/(:hash)', $session->get('level') == 'admin_laporan' ? 'Admin_laporan::$1' : 'Auth::block');
+$routes->get('/penjual/(:hash)', $session->get('level') == 'penjual' ? 'Penjual::$1' : 'Auth::block');
+// $routes->get('/admin/(:hash)', $session->get('level') == 'admin' ? 'Admin::$1' : 'Auth::block');
+// $routes->get('/pengguna/(:hash)', $session->get('level') == 'pembeli' ? 'Pengguna::$1' : 'Auth::block');
 
 
 /**

@@ -1,4 +1,4 @@
-<?php $this->extend('layout/template'); ?>
+<?php $this->extend('layout/auth_template'); ?>
 
 <?php $this->section('konten') ?>       
     <!-- Main content -->       
