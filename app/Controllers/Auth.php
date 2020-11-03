@@ -392,11 +392,11 @@ class Auth extends BaseController
 					session()->set($data);
 					if($dataPengguna['level'] == 'admin_pengguna')
 					{
-						return redirect()->to(base_url('/admin_pengguna'));
+						return redirect()->to(base_url('/admin_pengguna/pengguna'));
 					}
 					elseif($dataPengguna['level'] == 'admin_laporan')
 					{
-						return redirect()->to(base_url('/admin_laporan'));
+						return redirect()->to(base_url('/admin_laporan/pengguna'));
 					}
 					else
 					{
@@ -408,7 +408,7 @@ class Auth extends BaseController
 							</button>
 						</div>
 						');
-						return redirect()->to(base_url('/auth/formloginpembeli'));
+						return redirect()->to(base_url('/auth/formloginadmin'));
 					}
 				}
 				else
@@ -421,7 +421,7 @@ class Auth extends BaseController
 						</button>
 					</div>
 					');
-					return redirect()->to(base_url('/auth/formloginpembeli'));
+					return redirect()->to(base_url('/auth/formloginadmin'));
 				}
 			}
 			else
@@ -441,7 +441,7 @@ class Auth extends BaseController
 						</button>
 					</div>
 					');
-					return redirect()->to(base_url('/auth/formloginpembeli'));
+					return redirect()->to(base_url('/auth/formloginadmin'));
 				}
 				else
 				{
@@ -455,7 +455,7 @@ class Auth extends BaseController
 						</button>
 					</div>
 					');
-					return redirect()->to(base_url('/auth/formloginpembeli'));
+					return redirect()->to(base_url('/auth/formloginadmin'));
 				}
 
 				
@@ -471,7 +471,7 @@ class Auth extends BaseController
 				</button>
 			</div>
 			');
-			return redirect()->to(base_url('/auth/formloginpembeli'));
+			return redirect()->to(base_url('/auth/formloginadmin'));
 		}
 	}
 
@@ -491,7 +491,7 @@ class Auth extends BaseController
 					]
 				],
 				'email' => [
-					'rules' => 'required|valid_email|is_unique[t_pengguna.email]',
+					'rules' => 'required|valid_email|is_unique[t_pengguna.email,level,penjual]',
 					'errors' => [
 						'required' => 'Email tidak boleh kosong',
 						'is_unique' =>'{field} sudah terdaftar',
@@ -547,7 +547,7 @@ class Auth extends BaseController
 			'jenis_kelamin' => $this->request->getPost('jenis_kelamin')			
 		);
 		$token = bin2hex(random_bytes(15));
-		$this->sendEmail($token, $data['email']);
+		$this->sendEmail($token, $data['email'], 'aktivasi');
 
 		$this->pemModel->insert($dataPembeli);
 		$this->pModel->insert($data);
@@ -587,7 +587,7 @@ class Auth extends BaseController
 					]
 				],
 				'email' => [
-					'rules' => 'required|valid_email|is_unique[t_pengguna.email]',
+					'rules' => 'required|valid_email|is_unique[t_pengguna.email,level,pembeli]',
 					'errors' => [
 						'required' => 'Email tidak boleh kosong',
 						'is_unique' =>'{field} sudah terdaftar',
@@ -624,7 +624,7 @@ class Auth extends BaseController
 			return redirect()->to(base_url() . '/auth/formregispenjual')->withInput();
 		}
 		$data = array(
-			  'nama_pengguna' => $this->request->getPost('nama'),
+			  'nama_pengguna' => $this->request->getPost('nama_lengkap'),
 			  'email' => $this->request->getPost('email'),
 			  'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
 			  'level' => 'penjual',
@@ -638,7 +638,7 @@ class Auth extends BaseController
 		);
 		
 		$token = bin2hex(random_bytes(15));
-		$this->sendEmail($token, $data['email']);
+		$this->sendEmail($token, $data['email'], 'aktivasi');
 
 		$this->penModel->insert($dataPenjual);
 		$this->pModel->insert($data);
@@ -655,6 +655,81 @@ class Auth extends BaseController
 		return redirect()->to(base_url() . '/auth/formloginpenjual');
 	}
 
+	public function lupaPassword()
+	{
+		if($this->cekakses() == true)
+		{
+			return redirect()->back();
+		}
+		$data = [
+			'title' => 'Lupa Password | Niaga 11',
+			'validation' =>  \Config\Services::validation()
+		];		
+
+		return view('auth/lupapassword', $data);
+	}
+
+	public function gantipassword()
+	{
+		if(!$this->validate([
+			'email' => [
+				'rules' => 'required|valid_email',
+				'errors' => [
+					'required' => 'email tidak boleh kosong',
+					'valid_email' => 'email tidak valid'
+				]
+				],
+			'level' => [
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'level tidak boleh kosong'
+				]
+			]
+		]))
+		{
+			return redirect()->to('/auth/lupapassword')->withInput();
+		}
+
+		$email = $this->request->getPost('email');
+		$level = $this->request->getPost('level');
+
+		$data = $this->pModel->getByEmail($email);
+
+		if($data['email'] == $email && $data['level'] == $level)
+		{
+			$char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';			
+			$passwordbaru = '';
+			for($i =0; $i <= 6; $i++)
+			{
+				$passwordbaru .= $char[rand(0,  strlen($char) - 1)];
+			}
+			$this->pModel->gantiPassword($email, $level, $passwordbaru);
+			$this->sendEmail($passwordbaru, $email, 'gantipassword');
+			session()->setFlashdata('pesan','
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				Password anda telah berubah, <strong>Cek email untuk melihat password baru anda.</strong>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			');
+			return redirect()->to('/auth/formlogin' . $level);
+		}
+		else
+		{
+			session()->setFlashdata('pesan','
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				Email tidak terdaftar
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			');
+			return redirect()->to('/auth/lupapassword');
+		}
+
+	}
+
 	public function aktivasi()
 	{		
 		$email = $this->request->getGet('email');
@@ -667,12 +742,13 @@ class Auth extends BaseController
 			if($dataToken['token'] == $token)
 			{
 				$waktuBuat = strtotime($dataToken['created_at']);
-				$tambah1jam = $waktuBuat + 60 * 60 * 24;
+				$tambah1hari = $waktuBuat + 60 * 60 * 24;
 				$now = time();
 				
-				if($now < $tambah1jam)
+				if($now < $tambah1hari)
 				{
 					$this->tModel->deleteToken($email);
+					$level = $this->pModel->getByEmail($email);
 					$this->pModel->updateActive($email);
 					session()->setFlashdata('pesan','
 					<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -682,7 +758,7 @@ class Auth extends BaseController
 						</button>
 					</div>
 					');
-					return redirect()->to(base_url() . '/auth/formloginpembeli');
+					return redirect()->to(base_url() . '/auth/formlogin' . $level['level']);
 				}
 				else
 				{
@@ -752,13 +828,26 @@ class Auth extends BaseController
 		return redirect()->to(base_url());
 	}
 
-	private function sendEmail($token, $email)
+	private function sendEmail($token, $email, $status)
 	{
-		$pesan = 'Klik <a href="' . base_url('/auth/aktivasi?email=') . $email . '&token=' . $token . '">disini</a> untuk aktivasi akun anda.<br>Note: <strong>Anda mempunyai waktu 1 hari untuk aktivasi akun.</strong>';
-		$this->email->setFrom('niagaonline111@gmail.com', 'Niaga 11');
-		$this->email->setTo($email);
-		$this->email->setSubject('Niaga 11 | Aktivasi Akun');
-		$this->email->setMessage($pesan);
+		if($status == 'aktivasi')
+		{
+			$pesan = 'Klik <a href="' . base_url('/auth/aktivasi?email=') . $email . '&token=' . $token . '">disini</a> untuk aktivasi akun anda.<br>Note: <strong>Anda mempunyai waktu 1 hari untuk aktivasi akun.</strong>';
+			$this->email->setFrom('niagaonline111@gmail.com', 'Niaga 11');
+			$this->email->setTo($email);
+			$this->email->setSubject('Niaga 11 | Aktivasi Akun');
+			$this->email->setMessage($pesan);
+		}
+		elseif($status == 'gantipassword')
+		{
+			$pesan = 'Password anda telah di ganti menjadi <strong>' . $token . '</strong><br>
+					Silahkan login lalu ganti password anda.';
+			$this->email->setFrom('niagaonline111@gmail.com', 'Niaga 11');
+			$this->email->setTo($email);
+			$this->email->setSubject('Niaga 11 | Lupa Password');
+			$this->email->setMessage($pesan);
+		}
+		
 
 		if($this->email->send())
 		{

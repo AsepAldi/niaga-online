@@ -28,28 +28,78 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?= base_url() ?>/adminlte/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+          <img src="<?= base_url() ?>/img/profil/<?= $user['foto'] ?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?= $nama['nama_pengguna'] ?></a>
+          <?= $user['nama'] ?>
         </div>
+        <br>        
       </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">  
+          <li class="nav-header">Akun</li>
+            <li class="nav-item">
+              <a href="<?= base_url('/' . $uri->getSegment(1)) . '/edit_profile' . '/' . $user['email']  ?>" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Edit Profil
+              </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('/' . $uri->getSegment(1)) . '/ganti_password' . '/' . $user['email']  ?>" class="nav-link">
+              <i class="nav-icon fas fa-key"></i>
+              <p>
+                Ubah Password
+              </p>
+              </a>
+            </li>
           <?php if(session()->get('level') == 'admin_pengguna') : ?>
             <li class="nav-header">Data</li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="<?= base_url() ?>/admin_pengguna/pengguna#" class="nav-link">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
-                  Lihat Pengguna             
+                  Pengguna             
                 </p>
                 </a>
               </li>
               <li class="nav-item">
-                  <a href="./index2.html" class="nav-link">
+                <a href="<?= base_url() ?>/admin_pengguna/pembeli#" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  Pembeli
+                </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url() ?>/admin_pengguna/penjual#" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  Penjual
+                </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url() ?>/admin_pengguna/admnpengguna#" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  Admin Pengguna
+                </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url() ?>/admin_pengguna/admnlaporan#" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  Admin Laporan
+                </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                  <a href="<?= base_url() ?>/admin_pengguna/tambahadmin#" class="nav-link">
                   <i class="nav-icon fas fa-users-cog"></i>
                     <p>Tambah Admin</p>
                   </a>

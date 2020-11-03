@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Data Pengguna</h1>
+                <h1 class="m-0 text-dark">Data Penjual</h1>
             </div>            
         </div>
     </div>
@@ -36,9 +36,9 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Nama Toko</th>
                                 <th>Email</th>
-                                <th>Level</th>
-                                <th>Sudah Aktivasi?</th>
+                                <th>Nomor Telepon</th>
                                 <th>Daftar Sejak</th>
                             </tr>
                             </thead>
@@ -46,13 +46,13 @@
                                 <?php 
                                 $currentPage -= 1;
                                 $i = 1 + (6 * $currentPage);
-                                foreach ($pengguna as $user) : ?>    
+                                foreach ($penjual as $user) : ?>    
                                     <tr>
                                         <td><?= $i++; ?></td>
-                                        <td><?= $user['nama_pengguna'] ?></td>
+                                        <td><?= $user['nama_lengkap'] ?></td>
+                                        <td><?= $user['nama_toko'] ?></td>
                                         <td><?= $user['email'] ?></td>
-                                        <td><span class="badge badge-success"><?= $user['level'] ?></span></td>
-                                        <td><?= $user['is_active'] == 1 ? '<span class="badge badge-success">Sudah aktivasi</span>' : '<span class="badge badge-warning">Belum aktivasi</span>' ?></td>
+                                        <td><?= $user['nomor_telepon'] ?></td>
                                         <td><?= $user['created_at'] ?></td>
                                     </tr>           
                                 <?php endforeach; ?>
@@ -61,7 +61,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
-                        <?= $pager->links('pengguna', 'my_pager') ?>  
+                        <?= $pager->links('penjual', 'my_pager') ?>  
                         </div>
                     </div>
                     <!-- /.card -->

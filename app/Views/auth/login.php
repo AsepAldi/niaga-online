@@ -47,7 +47,8 @@ $method = $uri->getSegment(2);
 
       <div class="row">
         <p class="mt-2 mb-1 ml-2">
-          <a href="#">Lupa Password</a>
+          <?= $method != 'formloginadmin' ? '<a href="' . base_url('/auth/lupapassword') . '">Lupa Password</a>' : '' ?>   
+        
         </p>
       </div>
       <div class="row">

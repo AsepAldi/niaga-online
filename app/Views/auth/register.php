@@ -17,8 +17,7 @@ $method = $uri->getSegment(2);
       <p class="login-box-msg">Sign Up</p>
 
       <form action="<?= base_url() ?><?= $method == 'formregispembeli' ? '/auth/daftarpembeli' : '/auth/daftarpenjual' ?>" method="post">
-      <?= csrf_field() ?>
-      <?php if ($method == '/auth/regispembeli') : ?>
+      <?php if ($method == 'formregispembeli') : ?>
         <?= $validation->hasError('nama') ? '<small class="text-danger">' . $validation->getError('nama') . '</small>' : '' ?>
         <div class="input-group mb-3">
           <input type="text" class="form-control <?= $validation->hasError('nama') ? 'is-invalid' : '' ?>" placeholder="Nama" name="nama" value="<?= old('nama') ?>">

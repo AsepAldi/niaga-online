@@ -38,22 +38,22 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url() ?>/adminlte/dist/js/demo.js"></script>
 <script>
-  $(function () {    
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
-<script>
-$(document).ready(function () {
-  bsCustomFileInput.init();
-});
-</script>
+      function gantifoto(){
+        const imgPreview = document.querySelector('#imgPreview');
+        const imgInput = document.querySelector('.custom-file-label');
+        const gambar = document.querySelector('#foto');
+        
+
+        const fileGambar = new FileReader();
+        fileGambar.readAsDataURL(gambar.files[0]);
+          
+        imgInput.textContent = gambar.files[0].name;
+
+        fileGambar.onload = function(e){
+        imgPreview.src = e.target.result;
+        }
+      }
+
+    </script>
 </body>
 </html>
