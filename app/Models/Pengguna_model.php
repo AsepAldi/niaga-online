@@ -14,7 +14,7 @@ class Pengguna_model extends Model
         return $this->db->table('t_pengguna')->getWhere(['email' => $email])->getRowArray();
     }
 
-    public function getByEmailandLevel($email, $level = null)
+    public function getByEmailandLevel($email, $level)
     {
         return $this->db->table('t_pengguna')->getWhere(['email' => $email, 'level' => $level])->getRowArray();
     }

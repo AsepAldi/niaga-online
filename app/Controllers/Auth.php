@@ -124,7 +124,7 @@ class Auth extends BaseController
 		$email = $this->request->getPost('email');
 		$password = $this->request->getPost('password');
 
-		$dataPengguna = $this->pModel->getByEmail($email);
+		$dataPengguna = $this->pModel->getByEmailandLevel($email, 'pembeli');
 
 		if($dataPengguna)
 		{
@@ -250,7 +250,7 @@ class Auth extends BaseController
 		$email = $this->request->getPost('email');
 		$password = $this->request->getPost('password');
 
-		$dataPengguna = $this->pModel->getByEmail($email);
+		$dataPengguna = $this->pModel->getByEmailandLevel($email,'penjual');
 
 		if($dataPengguna)
 		{
@@ -542,6 +542,7 @@ class Auth extends BaseController
 		  );
 		$dataPembeli = array(
 			'nama' => $this->request->getPost('nama'),
+			'foto' => 'avatar.png',
 			'email' => $this->request->getPost('email'),
 			'nomor_telepon' => $this->request->getPost('no_telp'),
 			'jenis_kelamin' => $this->request->getPost('jenis_kelamin')			
@@ -632,6 +633,7 @@ class Auth extends BaseController
 		  );
 		$dataPenjual = array(
 			'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+			'foto' => 'avatar.png',
 			'nama_toko' => $this->request->getPost('nama_toko'),
 			'email' => $this->request->getPost('email'),
 			'nomor_telepon' => $this->request->getPost('no_telp'),
@@ -690,10 +692,11 @@ class Auth extends BaseController
 			return redirect()->to('/auth/lupapassword')->withInput();
 		}
 
+		
+
 		$email = $this->request->getPost('email');
 		$level = $this->request->getPost('level');
-
-		$data = $this->pModel->getByEmail($email);
+		$data = $this->pModel->getByEmailandLevel($email,$level);
 
 		if($data['email'] == $email && $data['level'] == $level)
 		{

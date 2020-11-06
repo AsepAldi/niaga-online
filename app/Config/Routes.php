@@ -37,6 +37,7 @@ $routes->get('/admin_pengguna', $session->get('level') == 'admin_pengguna' ? 'Ad
 $routes->get('/admin_laporan', $session->get('level') == 'admin_laporan' ? 'Admin_laporan::index' : 'Auth::block');
 $routes->get('/admin_pengguna/(:hash)', $session->get('level') == 'admin_pengguna' ? 'Admin_pengguna::$1' : 'Auth::block');
 $routes->get('/admin_laporan/(:hash)', $session->get('level') == 'admin_laporan' ? 'Admin_laporan::$1' : 'Auth::block');
+$routes->get('/penjual', $session->get('level') == 'penjual' ? 'Penjual::utama' : 'Auth::block');
 $routes->get('/penjual/(:hash)', $session->get('level') == 'penjual' ? 'Penjual::$1' : 'Auth::block');
 // $routes->get('/admin/(:hash)', $session->get('level') == 'admin' ? 'Admin::$1' : 'Auth::block');
 // $routes->get('/pengguna/(:hash)', $session->get('level') == 'pembeli' ? 'Pengguna::$1' : 'Auth::block');

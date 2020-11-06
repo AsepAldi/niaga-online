@@ -1,8 +1,8 @@
-<?php $this->extend('layout/template') ?>
+<?php $this->extend('layout/pembeli_template') ?>
 
 <?php $this->section('konten') ?>
 <div class="content-header">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row mb-2">
         <div class="col-sm-6">
             <h1 class="m-0 text-dark">Ubah Password</h1>
@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-body">     
                         <?= session()->getFlashdata('pesan') ? session()->getFlashdata('pesan') : '' ?>
-                        <form action="<?= base_url('/admin_pengguna/ubah_password') ?>" method="POST" enctype="multipart/form-data">
+                        <form action="<?= base_url('/pembeli/ubah_password') ?>" method="POST" enctype="multipart/form-data">
                         <?= csrf_field() ?>
                         <input type="hidden" name="email" value="<?= $user['email'] ?>">                        
                             <div class="form-group row">

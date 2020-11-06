@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 class Admin_laporan_model extends Model 
 {
     protected $table = 't_admin_laporan';
-    protected $allowedFields = ['nama', 'email', 'nomor_telepon'];
+    protected $allowedFields = ['nama', 'foto', 'email', 'nomor_telepon'];
     protected $useTimestamps = true;
 
     public function search($keyword)

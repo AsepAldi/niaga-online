@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-body">     
                         <?= session()->getFlashdata('pesan') ? session()->getFlashdata('pesan') : '' ?>
-                        <form action="<?= base_url('/admin_pengguna/ubah_password') ?>" method="POST" enctype="multipart/form-data">
+                        <form action="<?= base_url('/penjual/ubah_password') ?>" method="POST" enctype="multipart/form-data">
                         <?= csrf_field() ?>
                         <input type="hidden" name="email" value="<?= $user['email'] ?>">                        
                             <div class="form-group row">

@@ -281,9 +281,10 @@ class Admin_pengguna extends BaseController
     {
         if(!$this->validate([
             'nama' => [
-                'rules' => 'required|trim',
+                'rules' => 'required|trim|alpha_space',
                 'errors' => [
-                    'required' => 'Nama tidak boleh kosong'
+                    'required' => 'Nama tidak boleh kosong',
+                    'alpha_space' => 'Isi nama dengan huruf saja.'
                 ]
                 ],            
             'nomor_telepon' => [

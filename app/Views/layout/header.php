@@ -18,7 +18,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar elevation-4 sidebar-light-primary">
     <!-- Brand Logo -->
-    <a href="<?= session()->get('level') == 'admin' ? base_url('/admin') : base_url('/pengguna') ?>#" class="brand-link navbar-white">
+    <a href="<?= base_url() . $uri->getSegment(1) ?>" class="brand-link navbar-white">
       <img src="<?= base_url('/img/logo/icon-keranjang.png') ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-dark">Niaga 11</span>
     </a>
@@ -31,7 +31,7 @@
           <img src="<?= base_url() ?>/img/profil/<?= $user['foto'] ?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <?= $user['nama'] ?>
+          <?= session()->get('level') == 'penjual' ? $user['nama_lengkap'] : $user['nama'] ?>
         </div>
         <br>        
       </div>
@@ -108,18 +108,36 @@
           <?php else : ?>
           <li class="nav-header">Menu</li>
           <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?= base_url() ?>/penjual" class="nav-link">
               <i class="nav-icon fas fa-shopping-basket"></i>
               <p>
-                Beli Barang                  
+                Barang Saya
               </p>
               </a>
           </li>
           <li class="nav-item">
-              <a href="<?= base_url() ?>/pengguna/jual" class="nav-link">
+              <!-- <a href="<?php //base_url() ?>/pengguna/lihat_pembeli" class="nav-link"> -->
+              <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                lihat Pembeli
+              </p>
+              </a>
+          </li>
+          <li class="nav-item">
+              <!-- <a href="<?php // base_url() ?>/pengguna/jual" class="nav-link"> -->
+              <a href="#" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
-                Jual Barang                  
+                Chat
+              </p>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-list"></i>
+              <p>
+                Laporan Pembelian
               </p>
               </a>
           </li>

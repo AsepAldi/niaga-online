@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 class Admin_pengguna_model extends Model 
 {
     protected $table = 't_admin_pengguna';
-    protected $allowedFields = ['nama', 'email', 'nomor_telepon'];
+    protected $allowedFields = ['nama', 'foto', 'email', 'nomor_telepon'];
     protected $useTimestamps = true;
 
     public function search($keyword)
